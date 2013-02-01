@@ -1,0 +1,28 @@
+Thank you for trying the Yii Webshop module!
+
+To install this module, follow these steps:
+
+1.) extract the file under the modules/ directory of your Web Application. If the directory does not exist, create it.
+
+2.) set up the Module in your protected/config/main.php:
+
+return array(
+ [...]
+ 'modules' => array('shop' => array( 'debug' => 'true')),
+ [...]
+
+3.) run <webapp_url>/shop/install in your Web Browser
+
+4.) follow the on-screen installation instructions (in most cases simply click
+the install button)
+
+5.) Create an empty directory containing your product Images. By Default, this
+is approot/productimages. Make sure it is writable by your Web Server Process.
+
+6.) After Installation, make sure to remove the 'debug' => 'true' in
+your Configuration.
+
+7.) Set the option 'notifyAdminEmail' to a valid email address to receive
+an email every time a consumer orders a product
+
+8.) Read docs/config.txt for other Configuration Options

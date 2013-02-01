@@ -1,0 +1,11 @@
+ENH: added status (active, inactive) for products
+
+changes since yii-shop 0.8rc1
+
+ENH: When 'useWithYum' is enabled, a user can choose if he wants to create
+a user account at the site when ordering for the first time
+ENH: order has a status 'new', 'in_progress', 'done', 'cancelled' 
+ENH: delivery slip and invoice footer now at the bottom of the page, defined
+in assets/css/shop_print.css
+ENH: added possibility to create delivery slip and invoice as pdf. tcpdf needs
+to be installed. see docs/tcpdf.txt for further instructions.

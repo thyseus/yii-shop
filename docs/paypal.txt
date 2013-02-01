@@ -1,0 +1,12 @@
+How to allow your users to pay products with paypal:
+
+1.) In your shop configuration, set: 
+
+'payPalMethod' => X 
+
+where X is the id of the payment method that defines paypal.
+
+Now, the user gets directed to the paypal URL by the Paypal IPN System.
+
+If the payment succeds, it will set the status of the order from
+'new' to 'in progress' automatically.

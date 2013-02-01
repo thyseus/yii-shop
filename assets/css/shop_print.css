@@ -1,0 +1,10 @@
+div#print-footer {display: block; position: fixed; bottom: 0;}
+@page {
+  counter-increment: pages;
+  @bottom-center {
+      font-family: Times, Palatino, serif; 
+      font-size: 12pt;
+      font-weight: normal;
+      content: "Page " counter(pages);
+  }
+ }

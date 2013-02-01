@@ -1,0 +1,41 @@
+This is an example Application configuration for a german webshop:
+
+
+1. Set your currency Symbol
+The global currency of your Webshop is configured under 'currencySymbol'.
+
+	'modules' => array(
+		'shop' => array(
+			'currencySymbol' => '€',
+
+2. Set your project-specific views
+			'termsView' = '/myprojectspecific_view_folder/terms',
+			'successAction' = array('/myprojectspecific_controller/success'),
+			'failureAction' = array('/myprojectspecific_controller/failure'),
+
+
+
+The successAction will be exectuted upon order success, the failure action when
+an error occurs and the terms will be rendered right before the order
+confirmation button for the user to accept.
+
+3. Set the countries that are allowed:
+	'validCountries' => array(
+		'Deutschland' => 'Deutschland',
+		'Schweiz' => 'Schweiz'),
+
+Here is the full example:
+
+	'modules' => array(
+		'shop' => array(
+			'debug' => true,
+			'loginUrl' => array('/user/auth'),
+			'currencySymbol' => '€',
+			'termsView' = array('/myprojectspecific_controller/terms'),
+			'successView' = array('/myprojectspecific_controller/success'),
+			'failureView' = array('/myprojectspecific_controller/failure'),
+			),
+
+
+
+

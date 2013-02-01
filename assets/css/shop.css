@@ -1,0 +1,11 @@
+.shopping_cart {width:100%;}
+.shopping_cart th {font-weight:bold; border-bottom:1px solid #D2D2D2; padding:2px;}
+.shopping_cart td {vertical-align:top; padding:2px; text-align:left;}
+.tooltip { display: none; background-color: #CCC; border-radius:5px; margin: 5px; padding: 5px;} 
+.info { margin: 5px; padding: 5px; background-color: yellow;}
+.price_information{ cursor: pointer;}
+.buttons a {margin: 5px;}
+div#print-footer {display: block; position: fixed; bottom: 0;}
+.shop_selection {cursor: pointer;}
+
+.buttons li { list-style-type: none; float: left; margin-right: 10px; }

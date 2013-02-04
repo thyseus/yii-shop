@@ -149,9 +149,7 @@ class InstallController extends Controller
 								ON UPDATE NO ACTION)
 								ENGINE = InnoDB;";
 
-
 						$db->createCommand($sql)->execute();
-
 
 						// Create Customer Table
 						$sql = "CREATE TABLE IF NOT EXISTS   `".$customerTable."` (
@@ -176,6 +174,8 @@ class InstallController extends Controller
 							`delivery_address_id` INT NOT NULL ,
 							`billing_address_id` INT NOT NULL ,
 							`ordering_date` INT NOT NULL ,
+							`delivery_date` INT NOT NULL ,
+							`delivery_time` INT NOT NULL ,
 							`status` enum('new', 'in_progress', 'done', 'cancelled') NOT NULL DEFAULT 'new',
 							`ordering_done` TINYINT(1) NULL ,
 							`ordering_confirmed` TINYINT(1) NULL ,

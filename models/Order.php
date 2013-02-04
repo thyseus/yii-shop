@@ -12,6 +12,37 @@ class Order extends CActiveRecord
 		return $this;
 	}	
 
+	public function getDeliveryTime() {
+		$deliveryTimes = Shop::module()->deliveryTimes;
+		return $deliveryTimes[$this->delivery_time];
+	}
+
+	public function applyOrderOptions() {
+		$order_options = Yii::app()->user->getState('order_options');
+		$this->delivery_date = $this->convertDate($order_options['delivery_date']);
+		$this->delivery_time = $order_options['delivery_time'];
+	}
+
+	public function convertDate($date) {
+		if(!is_numeric($date)) {
+			if(Yii::app()->language == 'de') {
+				$parts = explode('.',$date);
+				$date = mktime(0, 0, 0, $parts[1], $parts[0], $parts[2]);
+			} else {
+				$parts = explode('/',$date);
+				$date = mktime(0, 0, 0, $parts[2], $parts[1], $parts[0]);
+			}
+		}
+		return $date;
+	}
+
+	public function beforeValidate() {
+		if($this->isNewRecord) {
+			$this->ordering_date = $this->convertDate($this->ordering_date);
+		}
+		return parent::beforeValidate();
+	}
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -25,9 +56,10 @@ class Order extends CActiveRecord
 	public function rules()
 	{
 		return array(
-				array('customer_id, ordering_date, delivery_address_id, billing_address_id, payment_method', 'required'),
+				array('customer_id, delivery_date, ordering_date, delivery_address_id, billing_address_id, payment_method', 'required'),
 				array('status', 'in', 'range' => array('new', 'in_progress', 'done', 'cancelled')),
 				array('customer_id', 'numerical', 'integerOnly'=>true),
+				array('delivery_time, delivery_date, ordering_date', 'numerical'),
 				array('order_id, customer_id, ordering_date, status, comment', 'safe'),
 				);
 	}
@@ -71,6 +103,8 @@ class Order extends CActiveRecord
 				'ordering_date' => Shop::t('Ordering Date'),
 				'status' => Shop::t('Status'),
 				'comment' => Shop::t('Comment'),
+				'delivery_date' => Shop::t('Delivery Date'),
+				'delivery_time' => Shop::t('Delivery Time'),
 				);
 	}
 
@@ -103,6 +137,9 @@ class Order extends CActiveRecord
 		$criteria->compare('t.customer_id',$this->customer_id);
 		$criteria->compare('t.ordering_date',$this->ordering_date,true);
 		$criteria->compare('t.status',$this->status);
+		$criteria->compare('t.status',$this->status);
+		$criteria->compare('t.delivery_time',$this->delivery_time);
+		$criteria->compare('t.delivery_date',$this->delivery_date);
 
 		// This code block is used mainly for searching for orders that a 
 		// specific user has made (a 'through' join is done here)

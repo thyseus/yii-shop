@@ -136,6 +136,9 @@ class OrderController extends Controller
 		if(isset($_POST['PaymentMethod'])) 
 			Yii::app()->user->setState('payment_method', $_POST['PaymentMethod']);
 
+		if(isset($_POST['Order'])) 
+			Yii::app()->user->setState('order_options', $_POST['Order']);
+
 		if(isset($_POST['DeliveryAddress']) && @$_POST['toggle_delivery'] == true) {
 			if(Address::isEmpty($_POST['DeliveryAddress'])) {
 				Shop::setFlash(Shop::t('Delivery address is not complete! Please fill in all fields to set the Delivery address'));
@@ -198,8 +201,10 @@ class OrderController extends Controller
 			Yii::app()->end();
 		}
 
-
 		if($customer && $payment_method && $shipping_method) {
+			$order = new Order();
+			$order->applyOrderOptions();
+
 			if(is_numeric($customer))
 				$customer = Customer::model()->findByPk($customer);
 			if(is_numeric($shipping_method))
@@ -212,6 +217,7 @@ class OrderController extends Controller
 						'customer' => $customer,
 						'shippingMethod' => $shipping_method,
 						'paymentMethod' => $payment_method,
+						'order' => $order,
 						));
 
 		}
@@ -221,11 +227,14 @@ class OrderController extends Controller
 		Yii::app()->user->setState('order_comment', @$_POST['Order']['Comment']);
 		if(isset($_POST['accept_terms']) && $_POST['accept_terms'] == 1) {
 			$order = new Order();
+			$order->applyOrderOptions();
+
 			$customer = Shop::getCustomer();
 			$cart = Shop::getCartContent();
 
 			$order->customer_id = $customer->customer_id;
 
+			// fetch delivery data
 			$address = new DeliveryAddress();
 			if($customer->deliveryAddress)
 				$address->attributes = $customer->deliveryAddress->attributes;
@@ -235,6 +244,7 @@ class OrderController extends Controller
 
 			$order->delivery_address_id = $address->id;
 
+			// fetch billing data
 			$address = new BillingAddress();
 			if($customer->billingAddress)
 				$address->attributes = $customer->billingAddress->attributes;

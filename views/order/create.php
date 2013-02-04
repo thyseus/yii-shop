@@ -1,7 +1,6 @@
 <?php
 $this->renderPartial('/order/waypoint', array('point' => 4));
 
-
 $this->breadcrumbs=array(
 		Shop::t('Order')=>array('index'),
 		Shop::t('New Order'),
@@ -27,7 +26,6 @@ if(!isset($customer))
 echo '<br />';
 echo '<hr />';
 				
-				
 echo '<p>';
 
 $shipping = ShippingMethod::model()->find('id = :id', array(
@@ -39,7 +37,6 @@ $shipping = ShippingMethod::model()->find('id = :id', array(
 			'//shop/shippingMethod/choose', 'order' => true));
 			echo '</p>';
 
-
 echo '<p>';
 	$payment = 	PaymentMethod::model()->findByPk(Yii::app()->user->getState('payment_method'));
 	echo '<strong>'.Shop::t('Payment method').': </strong>'.' '.$payment->title.' ('.$payment->description.')';	
@@ -48,7 +45,21 @@ echo '<p>';
 			'//shop/paymentMethod/choose', 'order' => true));
 echo '</p>';
 
+
+$deliveryTimes = Shop::module()->deliveryTimes;
+if($deliveryTimes) {
+echo '<p>';
+echo '<strong>'.Shop::t('Delivery Date').': </strong>'. date(Shop::module()->dateFormat, $order->delivery_date );
+	echo '<br />';
+echo '<strong>'.Shop::t('Preferred time').': </strong>'. $deliveryTimes[$order->delivery_time];
+	echo '<br />';
+	echo CHtml::link(Shop::t('Edit delivery date'), array(
+			'//shop/shippingMethod/choose', 'order' => true));
+echo '</p>';
+}
+
 echo '<hr />';
+
 
 $this->renderPartial('application.modules.shop.views.shoppingCart.view'); 
 

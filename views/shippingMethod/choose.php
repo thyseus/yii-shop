@@ -142,7 +142,31 @@ foreach($methods as $method) {
 }
 ?>
 
+<?php if(Shop::module()->deliveryTimes) { ?>
+<h3> <?php echo Shop::t('Delivery Date'); ?> </h3>
+<p> <?php echo Shop::t('Choose your delivery date'); ?> </p>
 
+<?php
+$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+			'name'=>'Order[delivery_date]',
+			'value' => date(Shop::module()->dateFormat, time() + 3*86400),
+			'language' => Yii::app()->language,
+			'options'=>array(
+				'showAnim'=>'fold',
+				'changeYear' => true,
+				'changeMonth' => true,
+				'closeText' => Shop::t('Apply'),
+				'minDate' => +3,
+				),
+			));
+?>
+
+<p> <?php echo Shop::t('Choose your preferred time'); ?> </p>
+
+<?php echo CHtml::dropDownList('Order[delivery_time]', 0,
+		Shop::module()->deliveryTimes); ?>
+
+<?php } ?>
 
 <?php
 Yii::app()->clientScript->registerScript('toggle', "

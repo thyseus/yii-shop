@@ -60,6 +60,12 @@ class ShopModule extends CWebModule
 
 	public $dateFormat = 'd/m/Y';
 
+	// Adjust to use your own delivery times. 
+	public $deliveryTimes = array(
+			0 => '07:00 - 12:00 AM',
+			1 => '13:00 - 18:00 PM',
+			);
+
 	// Set this to the id of the weight specification to enable weight
 	// calculation in the delivery slip and invoice. 1 is for the demo
 	// data. Set to NULL to disable weight calculation.

@@ -20,8 +20,20 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		'customer.address.lastname',
 		array(
 			'name' => 'ordering_date',
-			'value' => 'date("M j, Y", $data->ordering_date)',
+			'value' => 'date(Shop::module()->dateFormat, $data->ordering_date)',
 			'filter' => false
+			),
+		array(
+			'name' => 'delivery_date',
+			'value' => 'date(Shop::module()->dateFormat, $data->delivery_date)',
+			'filter' => false,
+			'visible' => Shop::module()->deliveryTimes !== false
+			),
+		array(
+			'name' => 'delivery_time',
+			'value' => '$data->getDeliveryTime()',
+			'filter' => Shop::module()->deliveryTimes,
+			'visible' => Shop::module()->deliveryTimes !== false
 			),
 		array(
 			'name' => 'status',
